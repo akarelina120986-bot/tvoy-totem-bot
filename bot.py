@@ -325,7 +325,18 @@ def main():
     app.add_handler(CallbackQueryHandler(button_handler))
 
     print("Бот запущен...")
-    app.run_polling()
+    webhook_url = os.getenv("RENDER_EXTERNAL_URL")
+
+if not webhook_url:
+    raise RuntimeError("Не найден адрес Render")
+
+app.run_webhook(
+    listen="0.0.0.0",
+    port=int(os.getenv("PORT", "10000")),
+    url_path="telegram",
+    webhook_url=f"{webhook_url}/telegram",
+    drop_pending_updates=True
+)
 
 
 if __name__ == "__main__":
