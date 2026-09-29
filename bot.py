@@ -324,11 +324,12 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CallbackQueryHandler(button_handler))
 
-        print("Бот запущен...")
+    print("Бот запущен...")
+
     webhook_url = os.getenv("RENDER_EXTERNAL_URL")
 
     if not webhook_url:
-        raise RuntimeError("Не найден адрес Render")
+        raise RuntimeError("Не найден адрес RENDER_EXTERNAL_URL")
 
     app.run_webhook(
         listen="0.0.0.0",
